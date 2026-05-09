@@ -1,0 +1,1477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction to Scientific Computing — Graduate Program in Civil Engineering, FIUNA</title>
+<meta name="description" content="Course website for Introduction to Scientific Computing, Graduate Program in Civil Engineering, Faculty of Engineering — National University of Asunción (UNA)." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --burgundy: #800020;
+    --burgundy-deep: #5e0017;
+    --burgundy-tint: #f7eef0;
+    --ink: #0a0a0a;
+    --ink-2: #2a2a2a;
+    --ink-3: #5a564f;
+    --ink-4: #8a857c;
+    --paper: #fbfaf7;
+    --paper-2: #f4f1ea;
+    --line: #e8e4dc;
+    --line-strong: #d6d1c5;
+
+    --serif: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
+    --sans:  "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --maxw: 1200px;
+    --gutter: clamp(20px, 4vw, 56px);
+    --radius: 4px;
+  }
+
+  /* ---------- Reset ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 16px;
+    line-height: 1.55;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  ::selection { background: var(--burgundy); color: #fff; }
+
+  /* Reduce-motion respect */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
+  }
+
+  /* ---------- Layout ---------- */
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+  .rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+  /* ---------- Top strip ---------- */
+  .topstrip {
+    background: var(--ink);
+    color: #d9d4c9;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .topstrip__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 10px;
+    gap: 16px;
+  }
+  .topstrip__left { display: flex; align-items: center; gap: 14px; }
+  .topstrip__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--burgundy); display: inline-block; box-shadow: 0 0 0 4px rgba(128,0,32,0.18); }
+  .topstrip__right { color: #8e887b; }
+  @media (max-width: 640px) {
+    .topstrip__right { display: none; }
+  }
+
+  /* ---------- Header ---------- */
+  .masthead {
+    background: var(--paper);
+    padding-block: clamp(28px, 5vw, 56px) clamp(36px, 6vw, 72px);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead__logos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: clamp(36px, 6vw, 72px);
+  }
+  .logo-slot {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.5);
+    transition: border-color .25s, background .25s;
+    min-width: 0;
+  }
+  .logo-slot:hover { border-color: var(--burgundy); background: var(--burgundy-tint); }
+
+  .logo-img {
+    display: inline-flex;
+    align-items: center;
+    height: clamp(56px, 7vw, 84px);
+    transition: opacity .2s, transform .2s;
+  }
+  .logo-img:hover { opacity: 0.85; }
+  .logo-img img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+  .logo-img--right { justify-content: flex-end; }
+  .logo-slot__mark {
+    width: 44px; height: 44px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background:
+      repeating-linear-gradient(135deg, rgba(128,0,32,0.15) 0 6px, rgba(128,0,32,0.06) 6px 12px);
+    border: 1px solid var(--line-strong);
+    display: grid; place-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+  }
+  .logo-slot__txt {
+    display: flex; flex-direction: column; min-width: 0;
+  }
+  .logo-slot__lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .logo-slot__name {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .logo-slot--right { flex-direction: row-reverse; text-align: right; }
+  .logo-slot--right .logo-slot__txt { align-items: flex-end; }
+  @media (max-width: 720px) {
+    .logo-slot__name { font-size: 13px; max-width: 24vw; }
+    .logo-slot { padding: 10px 12px; }
+    .logo-slot__mark { width: 36px; height: 36px; }
+  }
+
+  .masthead__meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .masthead__meta::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+  .masthead__title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 5.2vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 22px;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+
+  .masthead__sub {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 56px;
+    max-width: 880px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+  }
+  .masthead__sub dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 6px;
+  }
+  .masthead__sub dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  @media (max-width: 640px) {
+    .masthead__sub { grid-template-columns: 1fr; gap: 18px; }
+    .masthead__sub dd { font-size: 16px; }
+  }
+
+  /* ---------- Sticky Nav ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 250, 247, 0.85);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s, background .25s, box-shadow .25s;
+  }
+  .nav.is-stuck {
+    border-bottom-color: var(--line);
+    background: rgba(251, 250, 247, 0.92);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .nav__brand {
+    font-family: var(--serif);
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav__brand::before {
+    content: ""; width: 10px; height: 10px; background: var(--burgundy); border-radius: 1px;
+    transform: rotate(45deg);
+  }
+  .nav__list {
+    display: flex; gap: 4px; list-style: none; padding: 0; margin: 0;
+  }
+  .nav__list a {
+    display: inline-block;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-2);
+    border-radius: 999px;
+    position: relative;
+    transition: color .2s, background .2s;
+  }
+  .nav__list a:hover { color: var(--burgundy); }
+  .nav__list a.is-active {
+    color: var(--burgundy);
+    background: var(--burgundy-tint);
+  }
+  .nav__toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .nav__toggle span {
+    width: 16px; height: 1.5px; background: var(--ink); position: relative; display: block;
+    transition: transform .2s, opacity .2s;
+  }
+  .nav__toggle span::before, .nav__toggle span::after {
+    content: ""; position: absolute; left: 0; width: 16px; height: 1.5px; background: var(--ink);
+    transition: transform .2s;
+  }
+  .nav__toggle span::before { top: -5px; }
+  .nav__toggle span::after { top: 5px; }
+  .nav.is-open .nav__toggle span { background: transparent; }
+  .nav.is-open .nav__toggle span::before { transform: translateY(5px) rotate(45deg); }
+  .nav.is-open .nav__toggle span::after  { transform: translateY(-5px) rotate(-45deg); }
+
+  @media (max-width: 820px) {
+    .nav__toggle { display: inline-flex; }
+    .nav__list {
+      position: absolute; top: 60px; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+      padding: 8px var(--gutter) 16px;
+      transform: translateY(-8px); opacity: 0; pointer-events: none;
+      transition: transform .2s, opacity .2s;
+    }
+    .nav.is-open .nav__list { transform: none; opacity: 1; pointer-events: auto; }
+    .nav__list a { padding: 12px 14px; border-radius: var(--radius); }
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: clamp(64px, 10vw, 128px); scroll-margin-top: 72px; }
+  section + section { border-top: 1px solid var(--line); }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    padding-bottom: 22px;
+    margin-bottom: 44px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sec-head__num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    border: 1px solid var(--burgundy);
+    border-radius: 999px;
+    padding: 4px 10px;
+    flex: 0 0 auto;
+  }
+  .sec-head__name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .sec-head__name em {
+    font-style: normal;
+    color: var(--ink-4);
+    font-size: 0.85em;
+    margin-left: 8px;
+  }
+
+  /* ---------- Home ---------- */
+  .home__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .home__grid { grid-template-columns: 1fr; }
+  }
+  .home__welcome {
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    margin: 0 0 28px;
+    text-wrap: balance;
+  }
+  .home__welcome em { color: var(--burgundy); font-style: italic; }
+  .home__desc {
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    max-width: 60ch;
+    margin: 0 0 18px;
+  }
+  .home__desc + .home__desc { color: var(--ink-3); }
+
+  .info-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    padding: 28px;
+  }
+  .info-card__row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .info-card__row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .info-card__row:first-child { padding-top: 0; }
+  .info-card__k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .info-card__v {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .info-card__v small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .info-card__lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 14px;
+  }
+  .info-card__profs {
+    list-style: none; padding: 0; margin: 0 0 18px;
+    display: flex; flex-direction: column; gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .info-card__profs li {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .info-card__photo {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: 0 0 auto;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+  }
+  .info-card__photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .info-card__name {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  @media (max-width: 900px) {
+    .info-card { position: static; }
+  }
+
+  /* ---------- Announcements ---------- */
+  .announce {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .ann-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .ann-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--burgundy);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .35s ease;
+  }
+  .ann-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -20px rgba(0,0,0,0.18);
+  }
+  .ann-card:hover::before { transform: scaleY(1); }
+  .ann-card__top {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; margin-bottom: 14px;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    background: var(--burgundy-tint);
+    color: var(--burgundy);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .pill--new::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--burgundy);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(1.6); }
+  }
+  .ann-card__date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .ann-card__title {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0 0 10px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .ann-card__desc {
+    font-size: 14.5px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    margin: 0 0 16px;
+  }
+  .ann-card__more {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    transition: gap .2s;
+  }
+  .ann-card:hover .ann-card__more { gap: 10px; }
+
+  /* ---------- Bibliography ---------- */
+  .biblio {
+    border-top: 1px solid var(--line);
+  }
+  .biblio-item {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 28px;
+    align-items: center;
+    padding: 28px 4px;
+    border-bottom: 1px solid var(--line);
+    transition: background .2s, padding-inline .2s;
+  }
+  .biblio-item:hover {
+    background: var(--paper-2);
+    padding-inline: 12px;
+  }
+  .biblio-item__num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-4);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+  }
+  .biblio-item__body { min-width: 0; }
+  .biblio-item__type {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 6px;
+  }
+  .biblio-item__title {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.25;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .biblio-item__author {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .biblio-item__author cite {
+    font-style: italic;
+    color: var(--ink-2);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--line-strong);
+    background: #fff;
+    color: var(--ink);
+    transition: background .2s, color .2s, border-color .2s, transform .15s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 14px; height: 14px; }
+
+  .btn--burgundy {
+    background: var(--burgundy);
+    color: #fff;
+    border-color: var(--burgundy);
+  }
+  .btn--burgundy:hover {
+    background: var(--burgundy-deep);
+    border-color: var(--burgundy-deep);
+    color: #fff;
+  }
+
+  @media (max-width: 640px) {
+    .biblio-item { grid-template-columns: 1fr; gap: 12px; padding: 22px 4px; }
+    .biblio-item__num { display: none; }
+    .biblio-item .btn { justify-self: start; }
+  }
+
+  /* ---------- Exercises ---------- */
+  .ex-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .ex-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .ex-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -22px rgba(0,0,0,0.22);
+    border-color: var(--line-strong);
+  }
+  .ex-card__head {
+    background: linear-gradient(180deg, #fff 0%, var(--paper-2) 100%);
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .ex-card__no {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ex-card__no::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+  .ex-card__title {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0 0 4px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .ex-card__topic {
+    font-size: 13.5px;
+    color: var(--ink-3);
+  }
+  .ex-card__body {
+    padding: 18px 24px 22px;
+    display: flex; flex-direction: column; gap: 18px;
+    flex: 1;
+  }
+  .ex-card__meta {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .ex-card__meta dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 4px;
+  }
+  .ex-card__meta dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .ex-card__status {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .ex-card__status.is-due { color: var(--burgundy); }
+  .ex-card__status.is-open { color: #2a6f3f; }
+  .ex-card__status.is-soon { color: #b46a00; }
+  .ex-card__btn { align-self: stretch; justify-content: center; }
+
+  /* ---------- Contact ---------- */
+  .contact {
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  @media (max-width: 820px) { .contact__grid { grid-template-columns: 1fr; } }
+
+  .contact__email {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 22px 0;
+    border-block: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .contact__email .lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .contact__email a {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--ink);
+    border-bottom: 1px solid transparent;
+    transition: color .2s, border-color .2s;
+    align-self: flex-start;
+  }
+  .contact__email a:hover { color: var(--burgundy); border-color: var(--burgundy); }
+
+  .contact__note {
+    font-size: 14.5px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    border-left: 2px solid var(--burgundy);
+    padding-left: 16px;
+    max-width: 50ch;
+  }
+
+  .wa-card {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 6px;
+    padding: clamp(28px, 4vw, 40px);
+    position: relative;
+    overflow: hidden;
+  }
+  .wa-card::before {
+    content: ""; position: absolute; inset: -40% -20% auto auto;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(128,0,32,0.5), transparent 65%);
+    pointer-events: none;
+  }
+  .wa-card__eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #d9d4c9;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .wa-card__title {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.2;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+    position: relative;
+  }
+  .wa-card__sub {
+    font-size: 14.5px;
+    color: #c3bfb4;
+    line-height: 1.55;
+    margin: 0 0 24px;
+    position: relative;
+    max-width: 38ch;
+  }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--burgundy);
+    color: #fff;
+    padding: 18px 26px;
+    border-radius: 4px;
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    border: 0;
+    position: relative;
+    transition: background .2s, transform .15s, box-shadow .25s;
+    box-shadow: 0 18px 40px -16px rgba(128,0,32,0.55);
+  }
+  .wa-btn:hover {
+    background: var(--burgundy-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 22px 50px -16px rgba(128,0,32,0.7);
+  }
+  .wa-btn:active { transform: translateY(0); }
+  .wa-btn__icon {
+    width: 28px; height: 28px;
+    background: #fff;
+    color: var(--burgundy);
+    border-radius: 50%;
+    display: grid; place-items: center;
+  }
+  .wa-btn__icon svg { width: 16px; height: 16px; }
+  .wa-btn__arrow {
+    width: 16px; height: 16px; opacity: 0.85;
+    transition: transform .2s;
+  }
+  .wa-btn:hover .wa-btn__arrow { transform: translateX(4px); }
+
+  .wa-card__members {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 24px;
+    position: relative;
+  }
+  .wa-card__avatars {
+    display: flex;
+  }
+  .wa-card__avatars span {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: linear-gradient(135deg, #d9d4c9, #8a857c);
+    margin-left: -8px;
+  }
+  .wa-card__avatars span:first-child { margin-left: 0; }
+  .wa-card__members p {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8e887b;
+  }
+
+  /* ---------- Footer ---------- */
+  footer.foot {
+    background: var(--paper);
+    padding: 56px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .foot__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
+    padding-bottom: 40px;
+  }
+  .foot__logo {
+    display: block;
+    height: clamp(48px, 6vw, 72px);
+    width: auto;
+    margin-bottom: 12px;
+  }
+  .foot__brand {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    max-width: 36ch;
+  }
+  .foot__brand small {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-top: 6px;
+  }
+  .foot__cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, auto));
+    gap: 24px 56px;
+  }
+  .foot__cols h4 {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+  .foot__cols ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .foot__cols a {
+    font-size: 14px;
+    color: var(--ink-2);
+    transition: color .2s;
+  }
+  .foot__cols a:hover { color: var(--burgundy); }
+  .foot__credit {
+    background: var(--burgundy);
+    color: rgba(255,255,255,0.78);
+    margin-top: 24px;
+  }
+  .foot__credit-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-block: 12px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Bullet list (Announcements / Exercises soon-state) ---------- */
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .bullet-list li {
+    display: flex;
+    gap: 14px;
+    padding: 22px 4px;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+    text-align: left;
+  }
+  .bullet-list__date { flex: 0 0 auto; }
+  .bullet-list__date {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-4);
+    font-variant-numeric: tabular-nums;
+  }
+  .bullet-list__text {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .bullet-list__text em {
+    font-style: italic;
+    color: var(--burgundy);
+  }
+  @media (max-width: 560px) {
+    .bullet-list li { flex-direction: column; gap: 4px; }
+    .bullet-list__date { flex: 0 0 auto; }
+  }
+
+  /* ---------- Contact rows ---------- */
+  .contact__list {
+    border-top: 1px solid var(--line);
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .contact-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
+    align-items: center;
+    gap: 28px;
+    padding: 26px 28px;
+    border-bottom: 1px solid var(--line);
+    transition: background .2s, padding-inline .2s;
+    color: var(--ink);
+  }
+  .contact-row:last-child { border-bottom: 0; }
+  .contact-row:hover { background: var(--burgundy-tint); }
+  .contact-row__lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .contact-row:hover .contact-row__lbl { color: var(--burgundy); }
+  .contact-row__val {
+    font-family: var(--serif);
+    font-size: clamp(15px, 1.4vw, 17px);
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .contact-row__val .at {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--ink-4);
+    letter-spacing: 0.04em;
+  }
+  .contact-row__arrow {
+    font-family: var(--mono);
+    font-size: 22px;
+    color: var(--ink-4);
+    transition: transform .2s, color .2s;
+  }
+  .contact-row:hover .contact-row__arrow {
+    color: var(--burgundy);
+    transform: translate(2px, -2px);
+  }
+  @media (max-width: 720px) {
+    .contact-row {
+      grid-template-columns: 1fr auto;
+      gap: 6px 16px;
+      padding: 22px 20px;
+    }
+    .contact-row__lbl { grid-column: 1 / -1; }
+    .contact-row__val { font-size: 14px; }
+  }
+
+  .home__side {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+    position: sticky;
+    top: 84px;
+    align-self: start;
+  }
+  @media (max-width: 900px) {
+    .home__side { position: static; }
+  }
+  /* ---------- Drive link below info card ---------- */
+  .drive-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    transition: border-color .25s, background .25s, transform .15s;
+    width: 100%;
+  }
+  .drive-link:hover {
+    border-color: var(--burgundy);
+    background: var(--burgundy-tint);
+    transform: translateY(-1px);
+  }
+  .drive-link__icon {
+    flex: 0 0 auto;
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    background: var(--paper-2);
+    border-radius: var(--radius);
+  }
+  .drive-link__txt {
+    display: flex; flex-direction: column; gap: 2px;
+    flex: 1; min-width: 0;
+  }
+  .drive-link__lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .drive-link__name {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .drive-link__arrow {
+    flex: 0 0 auto;
+    color: var(--ink-4);
+    transition: color .2s, transform .2s;
+  }
+  .drive-link:hover .drive-link__arrow {
+    color: var(--burgundy);
+    transform: translate(2px, -2px);
+  }
+
+  /* ---------- Reveal animations ---------- */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.is-in { opacity: 1; transform: none; }
+  .reveal-stagger > * { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal-stagger.is-in > * { opacity: 1; transform: none; }
+  .reveal-stagger.is-in > *:nth-child(1) { transition-delay: 0ms; }
+  .reveal-stagger.is-in > *:nth-child(2) { transition-delay: 80ms; }
+  .reveal-stagger.is-in > *:nth-child(3) { transition-delay: 160ms; }
+  .reveal-stagger.is-in > *:nth-child(4) { transition-delay: 240ms; }
+  .reveal-stagger.is-in > *:nth-child(5) { transition-delay: 320ms; }
+  .reveal-stagger.is-in > *:nth-child(6) { transition-delay: 400ms; }
+
+  /* ---------- Scroll progress ---------- */
+  .scroll-progress {
+    position: fixed; left: 0; top: 0; height: 2px;
+    background: var(--burgundy);
+    width: 0;
+    z-index: 60;
+    transition: width .1s linear;
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Top status strip -->
+<div class="topstrip">
+  <div class="wrap topstrip__inner">
+    <div class="topstrip__left">
+      <span class="topstrip__dot" aria-hidden="true"></span>
+      <span>First term — 2026</span>
+    </div>
+    <div class="topstrip__right">
+      Last updated <span id="lastUpdated">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="wrap">
+
+    <div class="masthead__logos">
+      <a href="#" class="logo-img" aria-label="FIUNA — 100 years">
+        <img src="assets/fiuna-100.png" alt="FIUNA 100 años" />
+      </a>
+      <a href="#" class="logo-img logo-img--right" aria-label="Postgraduate Program in Civil Engineering">
+        <img src="assets/mic-logo.png" alt="Postgrado Ingeniería Civil — UNA" />
+      </a>
+    </div>
+
+    <p class="masthead__meta">
+      <span>Postgraduate Program in Civil Engineering</span>
+    </p>
+
+    <h1 class="masthead__title">
+      Introduction to Scientific Computing
+    </h1>
+
+    <dl class="masthead__sub">
+      <div>
+        <dt>Program</dt>
+        <dd>Graduate Program in Civil Engineering</dd>
+      </div>
+      <div>
+        <dt>Institution</dt>
+        <dd>Faculty of Engineering — National University of Asunción (UNA)</dd>
+      </div>
+    </dl>
+
+  </div>
+</header>
+
+<!-- Sticky nav -->
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="wrap nav__inner">
+    <a href="#home" class="nav__brand" aria-label="Home"></a>
+    <ul class="nav__list" id="navList">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+      <li><a href="#announcements">Announcements</a></li>
+      <li><a href="#bibliography">Bibliography</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      Menu
+    </button>
+  </div>
+</nav>
+
+<!-- 1. HOME -->
+<section id="home">
+  <div class="wrap">
+
+    <header class="sec-head reveal">
+      <span class="sec-head__num">01</span>
+      <h2 class="sec-head__name">Home <em>— course overview</em></h2>
+    </header>
+
+    <div class="home__grid">
+      <div>
+        <p class="home__welcome reveal">
+          Welcome to the Introduction to Scientific Computing course at the Graduate Program in Civil Engineering, FIUNA.
+        </p>
+
+        <p class="home__desc reveal">
+          Numerical methods are central to modern engineering practice, where mathematical models grow more complex every year and digital computers — increasingly accessible and powerful — make their solution feasible. Structural, thermal and many other problems are now routinely tackled in approximate form through computation.
+        </p>
+
+        <p class="home__desc reveal">
+          The course covers the numerical methods needed across this landscape: solving systems of linear equations, eigenvalue problems, ordinary and partial differential equations, numerical integration, and function approximation. It also lays the groundwork for efficient solution techniques such as the Finite Element Method, whose machinery rests on linear systems and quadrature.
+        </p>
+
+        <p class="home__desc reveal">
+          Once students are comfortable implementing the methods proposed here, they will be equipped to extend the toolkit to other algorithms not directly covered in the course.
+        </p>
+      </div>
+
+      <div class="home__side">
+      <aside class="info-card reveal" aria-label="Course information">
+        <div class="info-card__lbl">Instructors</div>
+        <ul class="info-card__profs">
+          <li>
+            <span class="info-card__photo"><img src="assets/prof-aquino.jpg" alt="Prof. Antonio Aquino" /></span>
+            <span class="info-card__name">Prof. Antonio Aquino</span>
+          </li>
+          <li>
+            <span class="info-card__photo"><img src="assets/prof-quintana.jpg" alt="Prof. Osvaldo Quintana" /></span>
+            <span class="info-card__name">Prof. Osvaldo Quintana</span>
+          </li>
+        </ul>
+        <dl style="margin:0">
+          <div class="info-card__row">
+            <dt class="info-card__k">Period</dt>
+            <dd class="info-card__v">First term — 2026</dd>
+          </div>
+          <div class="info-card__row">
+            <dt class="info-card__k">Format</dt>
+            <dd class="info-card__v">On-campus <small>Thursdays</small></dd>
+          </div>
+          <div class="info-card__row">
+            <dt class="info-card__k">Language</dt>
+            <dd class="info-card__v">Spanish <small>materials in ES · EN · PT</small></dd>
+          </div>
+        </dl>
+      </aside>
+
+      <a class="drive-link reveal" href="https://drive.google.com/drive/folders/1JU1vDX1ziK1pS-JVmJm1GuxlLdMj7hqy?usp=sharing" target="_blank" rel="noopener" aria-label="Open course Google Drive">
+        <span class="drive-link__icon" aria-hidden="true">
+          <svg viewBox="0 0 87 76" width="22" height="19">
+            <path fill="#1FA463" d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3L27.5 53H0c0 1.55.4 3.1 1.2 4.5l5.4 9.35z"/>
+            <path fill="#4285F4" d="M43.65 25 29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L1.2 48.5C.4 49.9 0 51.45 0 53h27.5L43.65 25z"/>
+            <path fill="#FFCD40" d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.5l5.85 11.5 7.9 12.3z"/>
+            <path fill="#1A73E8" d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2L43.65 25z"/>
+            <path fill="#EA4335" d="M59.8 53H27.5L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h50.55c1.6 0 3.15-.45 4.5-1.2L59.8 53z"/>
+            <path fill="#188038" d="M73.4 26.5 60.7 4.5c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25 59.8 53h27.45c0-1.55-.4-3.1-1.2-4.5L73.4 26.5z"/>
+          </svg>
+        </span>
+        <span class="drive-link__txt">
+          <span class="drive-link__lbl">Course materials</span>
+          <span class="drive-link__name">Google Drive folder</span>
+        </span>
+        <span class="drive-link__arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 2. EXERCISES -->
+<section id="exercises">
+  <div class="wrap">
+
+    <header class="sec-head reveal">
+      <span class="sec-head__num">02</span>
+      <h2 class="sec-head__name">Exercises</h2>
+    </header>
+
+    <ul class="bullet-list reveal">
+      <li>
+        <span class="bullet-list__date">•</span>
+        <span class="bullet-list__text">
+          <a href="exercises/lista-1.pdf" download>Lista de ejercicios 1</a>
+        </span>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- 3. ANNOUNCEMENTS -->
+<section id="announcements">
+  <div class="wrap">
+
+    <header class="sec-head reveal">
+      <span class="sec-head__num">03</span>
+      <h2 class="sec-head__name">Announcements</h2>
+    </header>
+
+    <ul class="bullet-list reveal">
+      <li>
+        <span class="bullet-list__date">—</span>
+        <span class="bullet-list__text">No announcements yet — <em>soon</em>.</span>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- 4. BIBLIOGRAPHY -->
+<section id="bibliography">
+  <div class="wrap">
+
+    <header class="sec-head reveal">
+      <span class="sec-head__num">04</span>
+      <h2 class="sec-head__name">Bibliography</h2>
+    </header>
+
+    <div class="biblio reveal-stagger">
+
+      <article class="biblio-item">
+        <div class="biblio-item__num">01 / Book</div>
+        <div class="biblio-item__body">
+          <div class="biblio-item__type">Book</div>
+          <h3 class="biblio-item__title">Scientific Computing: An Introductory Survey</h3>
+          <p class="biblio-item__author"><cite>Michael T. Heath</cite> · McGraw-Hill, 1997</p>
+        </div>
+        <a href="bibliography/heath-scientific-computing.pdf" class="btn" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          Download PDF
+        </a>
+      </article>
+
+      <article class="biblio-item">
+        <div class="biblio-item__num">02 / Book</div>
+        <div class="biblio-item__body">
+          <div class="biblio-item__type">Book</div>
+          <h3 class="biblio-item__title">Introduction to Scientific Computing: Twelve Computational Projects Solved with MATLAB</h3>
+          <p class="biblio-item__author"><cite>Ionuț Danaila, Pascal Joly, Sidi Mahmoud Kaber &amp; Marie Postel</cite> · Springer, 2006</p>
+        </div>
+        <a href="bibliography/danaila-intro-scientific-computing-matlab.pdf" class="btn" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          Download PDF
+        </a>
+      </article>
+
+      <article class="biblio-item">
+        <div class="biblio-item__num">03 / Book</div>
+        <div class="biblio-item__body">
+          <div class="biblio-item__type">Book</div>
+          <h3 class="biblio-item__title">Álgebra Lineal</h3>
+        </div>
+        <a href="bibliography/algebra-lineal.pdf" class="btn" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          Download PDF
+        </a>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+
+    <header class="sec-head reveal">
+      <span class="sec-head__num">05</span>
+      <h2 class="sec-head__name">Contact</h2>
+    </header>
+
+    <div class="contact__list reveal">
+      <a class="contact-row" href="mailto:aaquino@ing.una.py">
+        <span class="contact-row__lbl">Prof. Antonio Aquino</span>
+        <span class="contact-row__val">aaquino<span class="at">&nbsp;[at]&nbsp;</span>ing.una.py</span>
+        <span class="contact-row__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="contact-row" href="mailto:oquintana@ing.una.py">
+        <span class="contact-row__lbl">Prof. Osvaldo Quintana</span>
+        <span class="contact-row__val">oquintana<span class="at">&nbsp;[at]&nbsp;</span>ing.una.py</span>
+        <span class="contact-row__arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <p class="contact__note reveal" style="margin-top:32px">
+      For academic questions, please write to either instructor by email.
+    </p>
+
+  </div>
+</section>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div class="foot__brand">
+      <img src="assets/fiuna-wordmark.png" alt="Universidad Nacional de Asunción — Facultad de Ingeniería" class="foot__logo" />
+      Faculty of Engineering<br/>
+      National University of Asunción
+      <small>Graduate Program in Civil Engineering</small>
+    </div>
+    <div class="foot__cols">
+      <div>
+        <h4>Course</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#exercises">Exercises</a></li>
+          <li><a href="#announcements">Announcements</a></li>
+          <li><a href="#bibliography">Bibliography</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot__credit" aria-label="Site credits">
+    <div class="wrap foot__credit-inner">
+      <span>Faculty of Engineering · UNA</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Last updated ----------
+  (function () {
+    const el = document.getElementById('lastUpdated');
+    const d = new Date();
+    el.textContent = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  })();
+
+  // ---------- Mobile menu ----------
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  navToggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  navList.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      nav.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ---------- Sticky nav shadow + active section ----------
+  const navLinks = Array.from(navList.querySelectorAll('a'));
+  const sections = navLinks
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const onScroll = () => {
+    nav.classList.toggle('is-stuck', window.scrollY > 8);
+
+    // scroll progress
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('scrollProgress').style.width = Math.max(0, Math.min(100, pct)) + '%';
+
+    // active link
+    const y = window.scrollY + 100;
+    let active = sections[0];
+    for (const s of sections) {
+      if (s.offsetTop <= y) active = s;
+    }
+    navLinks.forEach(a => {
+      a.classList.toggle('is-active', a.getAttribute('href') === '#' + active.id);
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---------- Reveal on scroll ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
